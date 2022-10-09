@@ -1,0 +1,24 @@
+body{
+  background-color: beige;
+}
+
+.loginbox {
+  margin :   1rem auto   ;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+input{
+  width: 70%;
+}
+
+.inputbox {
+  display: flex;
+  margin: 0 auto;
+}
+.name {
+  display: flex;
+  flex-direction: column;
+  margin-left: 2rem;
+}

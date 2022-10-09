@@ -1,0 +1,12 @@
+.main {
+  display: block;
+  border: 2px solid black;
+  width: 80%;
+  margin: 3rem;
+  background-color: #fff;
+}
+
+button {
+  display: block;
+  margin: 1rem auto ;
+}
