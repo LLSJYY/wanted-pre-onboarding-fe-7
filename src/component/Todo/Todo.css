@@ -1,0 +1,13 @@
+.todolist{
+  list-style: none;
+}
+
+.btn {
+  margin: 0;
+}
+
+.todoli{
+  display: flex;
+  text-align: center;  
+  margin: 1rem;
+}
