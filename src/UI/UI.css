@@ -6,7 +6,12 @@
   background-color: #fff;
 }
 
-button {
-  display: block;
+.btn-sign {
+  display: inline-block;
   margin: 1rem auto ;
+}
+
+
+#sign-in {
+  margin-left: 1rem;
 }

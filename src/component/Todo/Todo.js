@@ -1,14 +1,20 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TodoInput from "./TodoInput";
 import TodoList from "./TodoList";
 import Button from "./Button/Button";
 import './Todo.css'
+import { useNavigate } from "react-router-dom";
 const Todo = () => {
-  
+  const navigate = useNavigate();
   const [enteredData,setEnteredData] = useState('');
   const [todoStore,setTodoStore] = useState([]);
-
+  const accessToken = localStorage.getItem('wtd_tk');
+  useEffect (()=> {
+    if(!accessToken){
+      navigate('/')
+    }
+  },[accessToken])
   const updataEnteredData = (data) => {
     setEnteredData(data);
   };
