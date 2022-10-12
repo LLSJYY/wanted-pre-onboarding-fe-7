@@ -11,7 +11,7 @@ const TodoInput = (props) => {
   }
 
 
-  const addTodo = () => { //중복된 값 확인해보고싶어요 ... get 방식..은안되겟지
+  const addTodo = () => {
     axios.post("https://pre-onboarding-selection-task.shop/todos", {
       "todo": inputRef.current.value,
     }, {
@@ -20,11 +20,10 @@ const TodoInput = (props) => {
         "Content-Type": "application/json",
       }
     }).then(function (response) {
-      console.log(response);
       appendTodoItem(response.data);
       inputRef.current.value = "";
     }).catch(function (error) {
-      console.log(error, "error");
+      console.warn(error, "error");
     })
   }
 

@@ -78,14 +78,12 @@ const Main = () => {
         "Content-Type": "application/json",
       }
     }).then((res) => {
-      console.log(res);
     }).catch((err) => {
-      console.log(err);
+      console.warn(err);
     }
     );
   }
   const postSignIn = ({ id, email }) => { //중복된 값 확인해보고싶어요 ... get 방식..은안되겟지
-    console.log(id, email)
     axios.post("https://pre-onboarding-selection-task.shop/auth/signin", {
       "email": `${id}`,
       "password": `${email}`,
@@ -98,7 +96,7 @@ const Main = () => {
       navigate('/todos');
     }).catch((err) => {
       // 에러 핸들링
-      console.log(err);
+      console.warn(err);
     })
   }
   return (

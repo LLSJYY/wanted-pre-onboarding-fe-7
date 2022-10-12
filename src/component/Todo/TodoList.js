@@ -19,7 +19,7 @@ const TodoList = (props) => {
     ).then((res)=> {
       deleteTodoItem(id);
     }).catch((res)=>{
-      console.log(res);
+      console.warn(res);
     })
   };
 
@@ -41,9 +41,9 @@ const TodoList = (props) => {
     },
     ).then((res)=> {
       modifyTodoItem(res.data);
-      setModify(0);
-  
+      setModify(0);  
     }).catch((res)=>{
+      console.warn(res);
 
     })
   }
@@ -59,7 +59,6 @@ const TodoList = (props) => {
     },
     ).then((res)=> {
       props.onChangeChecked(res.data);
-      console.log(res);
       }).catch((res)=>{
 
     })
