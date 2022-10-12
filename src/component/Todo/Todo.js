@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import TodoInput from "./TodoInput";
 import TodoList from "./TodoList";
-import Button from "./Button/Button";
 import './Todo.css'
 import { useNavigate } from "react-router-dom";
 
@@ -75,7 +74,6 @@ const Todo = () => {
       <div>
         <TodoInput appendTodoItem={appendTodoItem}></TodoInput>
         <TodoList todoStore={todoStore} setTodoStore={setTodoStore} deleteTodoItem={deleteTodoItem} modifyTodoItem={modifyTodoItem} onChangeChecked={onChangeChecked}></TodoList>
-        <Button></Button>
       </div>
     </>
   )

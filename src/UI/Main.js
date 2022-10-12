@@ -47,7 +47,7 @@ const Main = () => {
          , password: false 
         });
     }
-  } //여기다가 
+  } 
 
   const loginBtnHandler = (e) => {
     e.preventDefault();
@@ -83,7 +83,7 @@ const Main = () => {
     }
     );
   }
-  const postSignIn = ({ id, email }) => { //중복된 값 확인해보고싶어요 ... get 방식..은안되겟지
+  const postSignIn = ({ id, email }) => { 
     axios.post("https://pre-onboarding-selection-task.shop/auth/signin", {
       "email": `${id}`,
       "password": `${email}`,
@@ -95,7 +95,6 @@ const Main = () => {
       localStorage.setItem('wtd_tk', response.data.access_token);
       navigate('/todos');
     }).catch((err) => {
-      // 에러 핸들링
       console.warn(err);
     })
   }
