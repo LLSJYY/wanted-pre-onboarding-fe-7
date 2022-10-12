@@ -4,7 +4,6 @@ const BtnDelete = (props) => {
   const accessToken = localStorage.getItem('wtd_tk');
   const deleteTodoItem = props.deleteTodoItem;
   const todoItemId = props.todoItemId;
-  console.log(todoItemId);
   const deleteBtnHandler = (id) => {
     axios.delete(`https://pre-onboarding-selection-task.shop/todos/${id}`,
       {

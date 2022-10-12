@@ -16,8 +16,7 @@ const Todo = () => {
       navigate('/')
     }
   }, [accessToken]) // 왜 오류나는지 모르겟다.
-
-
+  
   useEffect(() => {
     axios.get('https://pre-onboarding-selection-task.shop/todos',
       {
@@ -31,8 +30,7 @@ const Todo = () => {
     }
     )
   }, []) // 왜 오류나는지 모르겟다.
-
-
+  
   const appendTodoItem = (data) => {
     setTodoStore((prevData) => [
       ...prevData,

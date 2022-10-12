@@ -5,7 +5,7 @@ const UserId = (props) => {
 
 
   return (
-  <input onChange = {idHandler} value={props.id}/>
+  <input id="" placeholder="id" onChange = {idHandler} value={props.id}/>
   );
 }
 

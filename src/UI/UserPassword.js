@@ -3,7 +3,7 @@ const UserPassword = (props) => {
     props.setPassword(event.target.value); 
   };
     return (
- <input type="password" onChange={passwordHandler} value={props.password}/>
+      <input id="password" type="password" placeholder="password" onChange={passwordHandler} value={props.password}/>
     );
   }
 
