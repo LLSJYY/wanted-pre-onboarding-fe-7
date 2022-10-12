@@ -12,7 +12,7 @@ const Todo = () => {
   const accessToken = localStorage.getItem('wtd_tk');
 
   useEffect(() => {
-    if (!accessToken) { 
+    if (!accessToken) {
       navigate('/')
     }
   }, [accessToken]) // 왜 오류나는지 모르겟다.
@@ -45,22 +45,30 @@ const Todo = () => {
     ]);
   }
   const deleteTodoItem = (id) => {
-    setTodoStore((prevData) => prevData.filter((el) => el.id !== id ));
+    setTodoStore((prevData) => prevData.filter((el) => el.id !== id));
   }
 
   const modifyTodoItem = (data) => {
-    setTodoStore((prevData)=> [...prevData].forEach((todo)=> {if(todo.id === data.id) {
-      todo.isCompleted = !todo.isCompleted
-    }}))
+    setTodoStore((prevData) => {[...prevData].forEach(
+      (item) => {
+        if (item.id === data.id) {
+            item.todo = data.todo;
+        }
+      }
+    )
+    return [...prevData];
   }
-return (
-  <>
-    <div>
-      <TodoInput appendTodoItem={appendTodoItem}></TodoInput>
-      <TodoList todoList={todoStore} deleteTodoItem={deleteTodoItem}></TodoList>
-      <Button></Button>
-    </div>
-  </>
-)
+    )
+    console.log(todoStore);
+  }
+  return (
+    <>
+      <div>
+        <TodoInput appendTodoItem={appendTodoItem}></TodoInput>
+        <TodoList todoStore={todoStore} setTodoStore={setTodoStore} deleteTodoItem={deleteTodoItem} modifyTodoItem={modifyTodoItem}></TodoList>
+        <Button></Button>
+      </div>
+    </>
+  )
 }
 export default Todo;

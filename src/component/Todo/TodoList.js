@@ -3,11 +3,13 @@ import { useState, useEffect,useRef } from "react";
 
 const TodoList = (props) => {
   const [modify, setModify] = useState(0);
+  const [newTodo,modifyTodo] = useState('');
   let modifyInputRef = useRef('')
-  const todoList = props.todoList;
+  const todoStore = props.todoStore;
   const deleteTodoItem = props.deleteTodoItem;
+  const modifyTodoItem = props.modifyTodoItem;
   const accessToken = localStorage.getItem('wtd_tk');
-  console.log()
+
   const deleteBtnHandler = (id) => {
     axios.delete(`https://pre-onboarding-selection-task.shop/todos/${id}`,{
       headers: {
@@ -21,9 +23,10 @@ const TodoList = (props) => {
     })
   };
 
+  
   const modifyInputHandler = (event) => {
     modifyInputRef.current.value = event.target.value; 
-    console.log(event);
+    modifyTodo(event.target.value);
   };
 
   const modfiyBySumbitBtn = (item) => {
@@ -38,19 +41,21 @@ const TodoList = (props) => {
       }
     },
     ).then((res)=> {
+      modifyTodoItem(res.data);
       setModify(0);
+  
     }).catch((res)=>{
+
     })
   }
-
   return (
     <>
-      {todoList.length > 0 && <ul className="todoul">
-        {todoList.map((item, index) => (
+      {todoStore.length > 0 && <ul className="todoul">
+        {todoStore.map((item, index) => (
           <li className="todoli" data-key={item.todo} key={index}>
             { modify === item.id ?
              <>
-              <input onChange={modifyInputHandler}  ref={modifyInputRef} />
+              <input onChange={modifyInputHandler}  value={newTodo} ref={modifyInputRef} />
               <button id="btn btn-submit" onClick={()=> modfiyBySumbitBtn(item)}>submit</button>
               <button id="btn btn-cancle" onClick={()=> setModify(0)} >cancel</button>
              </>
@@ -58,7 +63,7 @@ const TodoList = (props) => {
             <>
             <span id="content" >{item.todo}</span>
             <button className="btn delete" onClick={() => deleteBtnHandler(item.id)}>delete</button>
-            <button className="btn modfiy" onClick={() => setModify(item.id)} >modify</button>
+            <button className="btn modfiy" onClick={() => {modifyTodo(item.todo); return setModify(item.id)}} >modify</button>
             </>
             }
           </li>
