@@ -1,3 +1,5 @@
+import React from "react";
+
 const UserPassword = (props) => {
   const passwordHandler = (event) => {
     props.setPassword(event.target.value); 

@@ -16,7 +16,7 @@ const Todo = () => {
       navigate('/')
     }
   }, [accessToken]) // 왜 오류나는지 모르겟다.
-  
+
   useEffect(() => {
     axios.get('https://pre-onboarding-selection-task.shop/todos',
       {
@@ -30,7 +30,7 @@ const Todo = () => {
     }
     )
   }, []) // 왜 오류나는지 모르겟다.
-  
+
   const appendTodoItem = (data) => {
     setTodoStore((prevData) => [
       ...prevData,
@@ -47,23 +47,35 @@ const Todo = () => {
   }
 
   const modifyTodoItem = (data) => {
-    setTodoStore((prevData) => {[...prevData].forEach(
-      (item) => {
-        if (item.id === data.id) {
+    setTodoStore((prevData) => {
+      [...prevData].forEach(
+        (item) => {
+          if (item.id === data.id) {
             item.todo = data.todo;
-        }
-      }
+          }
+        })
+      return [...prevData];
+    }
     )
-    return [...prevData];
   }
+
+  const onChangeChecked = (data) => {
+    setTodoStore((prevData) => {
+      [...prevData].forEach(
+        (item) => {
+          if (item.id === data.id) {
+            item.isCompleted = data.isCompleted;
+          }
+        })
+      return [...prevData];
+    } 
     )
-    console.log(todoStore);
   }
   return (
     <>
       <div>
         <TodoInput appendTodoItem={appendTodoItem}></TodoInput>
-        <TodoList todoStore={todoStore} setTodoStore={setTodoStore} deleteTodoItem={deleteTodoItem} modifyTodoItem={modifyTodoItem}></TodoList>
+        <TodoList todoStore={todoStore} setTodoStore={setTodoStore} deleteTodoItem={deleteTodoItem} modifyTodoItem={modifyTodoItem} onChangeChecked={onChangeChecked}></TodoList>
         <Button></Button>
       </div>
     </>
