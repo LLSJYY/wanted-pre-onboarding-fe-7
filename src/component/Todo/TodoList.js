@@ -1,34 +1,71 @@
-import { useState, useRef } from "react";
+import axios from "axios";
+import { useState, useEffect,useRef } from "react";
 
 const TodoList = (props) => {
-  const [Modal, setmModal] = useState(false);
-  const modifyTodo = useRef('');
-  const modifyHandler = () => {
-    setmModal(true);
+  const [modify, setModify] = useState(0);
+  let modifyInputRef = useRef('')
+  const todoList = props.todoList;
+  const deleteTodoItem = props.deleteTodoItem;
+  const accessToken = localStorage.getItem('wtd_tk');
+  console.log()
+  const deleteBtnHandler = (id) => {
+    axios.delete(`https://pre-onboarding-selection-task.shop/todos/${id}`,{
+      headers: {
+        "Authorization": `Bearer ${accessToken}`,
+      }
+    },
+    ).then((res)=> {
+      deleteTodoItem(id);
+    }).catch((res)=>{
+      console.log(res);
+    })
+  };
+
+  const modifyInputHandler = (event) => {
+    modifyInputRef.current.value = event.target.value; 
+    console.log(event);
+  };
+
+  const modfiyBySumbitBtn = (item) => {
+    const newTodoText = modifyInputRef.current.value;
+    axios.put(`https://pre-onboarding-selection-task.shop/todos/${item.id}`,{
+      todo:newTodoText,
+      isCompleted: false,
+    },{
+      headers: {
+        "Authorization": `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      }
+    },
+    ).then((res)=> {
+      setModify(0);
+    }).catch((res)=>{
+    })
   }
 
   return (
     <>
-      <ul className="todoul">
-        {props.todoStore.map((item, index) => (
-          <li className="todoli" data-key={item.id} key={index}><span id="content">{item.data}</span><button onClick={() => props.updateDeleteData(item.id)} className="btn modify">delete</button><button onClick={()=> modifyTodo = item.data} className="btn delete">modify</button></li>
+      {todoList.length > 0 && <ul className="todoul">
+        {todoList.map((item, index) => (
+          <li className="todoli" data-key={item.todo} key={index}>
+            { modify === item.id ?
+             <>
+              <input onChange={modifyInputHandler}  ref={modifyInputRef} />
+              <button id="btn btn-submit" onClick={()=> modfiyBySumbitBtn(item)}>submit</button>
+              <button id="btn btn-cancle" onClick={()=> setModify(0)} >cancel</button>
+             </>
+             : 
+            <>
+            <span id="content" >{item.todo}</span>
+            <button className="btn delete" onClick={() => deleteBtnHandler(item.id)}>delete</button>
+            <button className="btn modfiy" onClick={() => setModify(item.id)} >modify</button>
+            </>
+            }
+          </li>
         ))
 
         }
-      </ul>
-
-      <div className="modal">
-        <div className="modal-container">
-          <div className="modal-inner">
-            <input></input>
-            <div className="modal-inner btn">
-              <button>Yes</button>
-              <button>No</button>
-            </div>
-
-          </div>
-        </div>
-      </div>
+      </ul>}
     </>
   )
 }
