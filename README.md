@@ -1,8 +1,11 @@
 # 원티드 프리온보딩 프론트엔드 코스 과제 제출용 페이지
 
-# 데모
-> 동영상
 
+https://user-images.githubusercontent.com/96014828/196149014-b2bc9d71-05ad-4f6c-8521-18a1f5ed63af.mp4
+
+
+# 데모
+> 화면 기록 2022-10-17 오후 6.20.57
 # 프로젝트 실행 방법
 ```JavaScript
   $ npm install
