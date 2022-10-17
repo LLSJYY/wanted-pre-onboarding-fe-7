@@ -1,13 +1,11 @@
 import axios from "axios";
 import { useState,  useRef } from "react";
 
-const TodoList = (props) => {
+const TodoList = ({todoStore,deleteTodoItem,modifyTodoItem}) => {
   const [modify, setModify] = useState(0);
   const [newTodo,modifyTodo] = useState('');
+  
   let modifyInputRef = useRef('')
-  const todoStore = props.todoStore;
-  const deleteTodoItem = props.deleteTodoItem;
-  const modifyTodoItem = props.modifyTodoItem;
   const accessToken = localStorage.getItem('wtd_tk');
 
   const deleteBtnHandler = (id) => {

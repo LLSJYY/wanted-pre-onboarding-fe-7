@@ -29,7 +29,21 @@ const Todo = () => {
     )
   }, [])
 
-  const appendTodoItem = (data) => {
+  const onAddTodo = (data) => {
+    axios.post("https://pre-onboarding-selection-task.shop/todos", {
+      "todo": data,
+    }, {
+      headers: {
+        "Authorization": `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      }
+    }).then(function (res) {
+      addTodoItem(res.data);
+    }).catch(function (error) {
+      console.warn(error, "error");
+    })
+  }
+  const addTodoItem = (data) => {
     setTodoStore((prevData) => [
       ...prevData,
       {
@@ -40,6 +54,8 @@ const Todo = () => {
       }
     ]);
   }
+
+  
   const deleteTodoItem = (id) => {
     setTodoStore((prevData) => prevData.filter((el) => el.id !== id));
   }
@@ -72,7 +88,7 @@ const Todo = () => {
   return (
     <>
       <div>
-        <TodoInput appendTodoItem={appendTodoItem}></TodoInput>
+        <TodoInput onAddTodo={onAddTodo}/>
         <TodoList todoStore={todoStore} setTodoStore={setTodoStore} deleteTodoItem={deleteTodoItem} modifyTodoItem={modifyTodoItem} onChangeChecked={onChangeChecked}></TodoList>
       </div>
     </>
