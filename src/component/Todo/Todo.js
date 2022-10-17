@@ -43,6 +43,7 @@ const Todo = () => {
       console.warn(error, "error");
     })
   }
+
   const addTodoItem = (data) => {
     setTodoStore((prevData) => [
       ...prevData,
@@ -55,9 +56,40 @@ const Todo = () => {
     ]);
   }
 
-  
+  const onDeleteTodo = (id) => {
+    axios.delete(`https://pre-onboarding-selection-task.shop/todos/${id}`, {
+      headers: {
+        "Authorization": `Bearer ${accessToken}`,
+      }
+    },
+    ).then(() => {
+      deleteTodoItem(id);
+    }).catch((res) => {
+      console.warn(res);
+    })
+  };
+
   const deleteTodoItem = (id) => {
     setTodoStore((prevData) => prevData.filter((el) => el.id !== id));
+  }
+
+  const onModifyTodo = ({item,newTodo}) => {
+    axios.put(`https://pre-onboarding-selection-task.shop/todos/${item.id}`, {
+      todo: newTodo,
+      isCompleted: false,
+    }, {
+      headers: {
+        "Authorization": `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      }
+    },
+    ).then((res) => {
+      console.log(res.data);
+      modifyTodoItem(res.data);
+    }).catch((res) => {
+      console.warn(res);
+
+    })
   }
 
   const modifyTodoItem = (data) => {
@@ -72,6 +104,22 @@ const Todo = () => {
     }
     )
   }
+  const onCompletedTodo = (item) => {
+    axios.put(`https://pre-onboarding-selection-task.shop/todos/${item.id}`,{
+      todo:item.todo,
+      isCompleted: !item.isCompleted,
+    },{
+      headers: {
+        "Authorization": `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      }
+    },
+    ).then((res)=> {
+      onChangeChecked(res.data);
+      }).catch((res)=>{
+
+    })
+  }
 
   const onChangeChecked = (data) => {
     setTodoStore((prevData) => {
@@ -82,14 +130,22 @@ const Todo = () => {
           }
         })
       return [...prevData];
-    } 
+    }
     )
   }
   return (
     <>
       <div>
-        <TodoInput onAddTodo={onAddTodo}/>
-        <TodoList todoStore={todoStore} setTodoStore={setTodoStore} deleteTodoItem={deleteTodoItem} modifyTodoItem={modifyTodoItem} onChangeChecked={onChangeChecked}></TodoList>
+        <TodoInput onAddTodo={onAddTodo} />
+        <TodoList
+          todoStore={todoStore}
+          setTodoStore={setTodoStore}
+          onDeleteTodo={onDeleteTodo}
+          modifyTodoItem={modifyTodoItem}
+          onChangeChecked={onChangeChecked}
+          onCompletedTodo={onCompletedTodo}
+          onModifyTodo={onModifyTodo}
+        ></TodoList>
       </div>
     </>
   )
