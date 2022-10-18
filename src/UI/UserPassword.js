@@ -6,7 +6,7 @@ const UserPassword = (props) => {
   };
   return (
     <form>
-      <input id="password" type="password" placeholder="password" onChange={passwordHandler} value={props.password} />
+      <input id="password" type="password"   placeholder="password" onChange={passwordHandler} value={props.password} />
     </form>
   );
 }

@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useState,  useRef } from "react";
+import TodoItem from "./TodoItem";
 
 const TodoList = ({todoStore,onDeleteTodo,onModifyTodo,onCompletedTodo}) => {
   const [toggleModify, showModfiyInput] = useState(0);
@@ -31,21 +31,17 @@ const TodoList = ({todoStore,onDeleteTodo,onModifyTodo,onCompletedTodo}) => {
     <>
       {todoStore.length > 0 && <ul className="todoul">
         {todoStore.map((item, index) => (
-          <li className="todoli" data-key={item.todo} key={index}>
-            { toggleModify === item.id ?
-             <>
-              <input onChange={modifyInputHandler}  value={newTodo} ref={modifyInputRef} />
-              <button id="btn btn-submit" onClick={()=> modfiyBySumbit(item)}>submit</button>
-              <button id="btn btn-cancle" onClick={()=> showModfiyInput(0)} >cancel</button>
-             </>
-             : 
-            <>
-            <input id="isCompleted" type="checkbox" onChange={()=> onChangeCompleted(item)} checked={item.isCompleted}/><span id="content" >{item.todo}</span>
-            <button className="btn delete" onClick={() => deleteBtnHandler(item.id)}>delete</button>
-            <button className="btn modfiy" onClick={() => {modifiedTodo(item.todo); return showModfiyInput(item.id)}} >modify</button>
-            </>
-            }
-          </li>
+          <TodoItem 
+          key ={index}
+          item={item}
+          index={index}
+          modifyInputHandler={modifyInputHandler}
+          modfiyBySumbit={modfiyBySumbit}
+          deleteBtnHandler={deleteBtnHandler}
+          onChangeCompleted={onChangeCompleted}
+          toggleModify={toggleModify}
+          modifiedTodo={modifiedTodo}
+          />
         ))
 
         }
