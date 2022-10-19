@@ -1,7 +1,8 @@
 import { useState,  useRef } from "react";
 import TodoItem from "./TodoItem";
-
+import todoRedux from "../../feature/todoRedux";
 const TodoList = ({todoStore,onDeleteTodo,onModifyTodo,onCompletedTodo}) => {
+  
   const [toggleModify, showModfiyInput] = useState(0);
   const [newTodo,modifiedTodo] = useState('');  
   let modifyInputRef = useRef('')
@@ -9,6 +10,7 @@ const TodoList = ({todoStore,onDeleteTodo,onModifyTodo,onCompletedTodo}) => {
   const modifyInputHandler = (event) => {
     modifyInputRef.current.value = event.target.value; 
     modifiedTodo(event.target.value);
+    console.log()
   };
 
   const modfiyBySumbit = (item) => {
@@ -25,6 +27,7 @@ const TodoList = ({todoStore,onDeleteTodo,onModifyTodo,onCompletedTodo}) => {
   
   const onChangeCompleted = (item) => {
     onCompletedTodo(item);
+    console.log(item.isCompleted);
   }
 
   return (
@@ -41,6 +44,9 @@ const TodoList = ({todoStore,onDeleteTodo,onModifyTodo,onCompletedTodo}) => {
           onChangeCompleted={onChangeCompleted}
           toggleModify={toggleModify}
           modifiedTodo={modifiedTodo}
+          showModfiyInput={showModfiyInput}
+          newTodo={newTodo}
+          modifyInputRef={modifyInputRef}
           />
         ))
 

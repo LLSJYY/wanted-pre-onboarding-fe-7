@@ -3,7 +3,6 @@ import { React, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Main.css"
 import UserId from "./UserId";
-import UserPassword from "./UserPassword";
 import Button from "./Button";
 
 const Main = () => {
@@ -23,14 +22,14 @@ const Main = () => {
     const emailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     setId(id);
     setDisable({
-        ...disable
-        , id: true
-      });
+      ...disable
+      , id: true
+    });
     if (id.match(emailformat)) {
       setDisable({
-          ...disable,
-          id: false
-        });
+        ...disable,
+        id: false
+      });
     }
   }
 
@@ -38,25 +37,25 @@ const Main = () => {
     const passwordformat = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;
     setpPassword(password);
     setDisable({
-        ...disable,
-        password: true
-      });
+      ...disable,
+      password: true
+    });
     if (password.match(passwordformat)) {
       setDisable({
-         ...disable
-         , password: false 
-        });
+        ...disable
+        , password: false
+      });
     }
-  } 
+  }
 
   const loginBtnHandler = (e) => {
     e.preventDefault();
     setId('');
     setpPassword('');
     setDisable({
-       id: true,
-        password: true
-       });
+      id: true,
+      password: true
+    });
     postSignIn({ id, password });
   };
 
@@ -83,7 +82,7 @@ const Main = () => {
     }
     );
   }
-  const postSignIn = ({ id, email }) => { 
+  const postSignIn = ({ id, email }) => {
     axios.post("https://pre-onboarding-selection-task.shop/auth/signin", {
       "email": `${id}`,
       "password": `${email}`,
@@ -107,11 +106,18 @@ const Main = () => {
           <span>PW</span>
         </div>
         <div className="input">
-          <UserId setId={updateid} id={id}></UserId>
-          <UserPassword setPassword={updatepassword} password={password}></UserPassword>
+          <UserId
+            setId={updateid}
+            id={id}
+            setPassword={updatepassword}
+            password={password}
+          />
         </div>
       </div>
-      <Button disable={disable} onClick={loginBtnHandler} signUpBtnHandler={signUpBtnHandler}></Button>
+      <Button
+        disable={disable}
+        onClick={loginBtnHandler}
+        signUpBtnHandler={signUpBtnHandler} />
     </div>
   )
 

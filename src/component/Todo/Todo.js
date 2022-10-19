@@ -4,12 +4,16 @@ import TodoInput from "./TodoInput";
 import TodoList from "./TodoList";
 import './Todo.css'
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { init, deleteTodo, modifyTodo } from "../../feature/todoRedux";
 
 const Todo = () => {
+  const todo2 = useSelector((state) => state.todo.list);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [todoStore, setTodoStore] = useState([]);
   const accessToken = localStorage.getItem('wtd_tk');
-
+  console.log(todo2);
   useEffect(() => {
     if (!accessToken) {
       navigate('/')
@@ -25,6 +29,7 @@ const Todo = () => {
       }
     ).then((res) => {
       setTodoStore(res.data);
+      dispatch(init(res.data))
     }
     )
   }, [])
@@ -62,8 +67,10 @@ const Todo = () => {
         "Authorization": `Bearer ${accessToken}`,
       }
     },
-    ).then(() => {
+    ).then((res) => {
       deleteTodoItem(id);
+      dispatch(deleteTodo(id));
+
     }).catch((res) => {
       console.warn(res);
     })
@@ -73,7 +80,7 @@ const Todo = () => {
     setTodoStore((prevData) => prevData.filter((el) => el.id !== id));
   }
 
-  const onModifyTodo = ({item,newTodo}) => {
+  const onModifyTodo = ({ item, newTodo }) => {
     axios.put(`https://pre-onboarding-selection-task.shop/todos/${item.id}`, {
       todo: newTodo,
       isCompleted: false,
@@ -84,18 +91,17 @@ const Todo = () => {
       }
     },
     ).then((res) => {
-      console.log(res.data);
       modifyTodoItem(res.data);
+      dispatch(modifyTodo(res.data));
     }).catch((res) => {
       console.warn(res);
 
     })
   }
-
-  const modifyTodoItem = (data) => {
+  const modifyTodoItem = (...data) => {
     setTodoStore((prevData) => {
       [...prevData].forEach(
-        (item) => {
+        ({ ...item }) => { // ... readonly..?
           if (item.id === data.id) {
             item.todo = data.todo;
           }
@@ -105,18 +111,18 @@ const Todo = () => {
     )
   }
   const onCompletedTodo = (item) => {
-    axios.put(`https://pre-onboarding-selection-task.shop/todos/${item.id}`,{
-      todo:item.todo,
+    axios.put(`https://pre-onboarding-selection-task.shop/todos/${item.id}`, {
+      todo: item.todo,
       isCompleted: !item.isCompleted,
-    },{
+    }, {
       headers: {
         "Authorization": `Bearer ${accessToken}`,
         "Content-Type": "application/json",
       }
     },
-    ).then((res)=> {
+    ).then((res) => {
       onChangeChecked(res.data);
-      }).catch((res)=>{
+    }).catch((res) => {
 
     })
   }
@@ -124,14 +130,13 @@ const Todo = () => {
   const onChangeChecked = (data) => {
     setTodoStore((prevData) => {
       [...prevData].forEach(
-        (item) => {
+        ({ ...item }) => {
           if (item.id === data.id) {
             item.isCompleted = data.isCompleted;
           }
         })
       return [...prevData];
-    }
-    )
+    })
   }
   return (
     <>

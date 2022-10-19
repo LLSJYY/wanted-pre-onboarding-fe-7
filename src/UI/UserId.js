@@ -1,11 +1,16 @@
-const UserId = (props) => {
+const UserId = ({id,password,setId,setPassword}) => {
   const idHandler = (event) => {
-    props.setId(event.target.value); 
+    setId(event.target.value);
+  };
+  const passwordHandler = (event) => {
+    setPassword(event.target.value);
   };
 
-
   return (
-  <input  id="id" placeholder="id"  onChange = {idHandler} value={props.id}/>
+    <form>
+      <input id="id" placeholder="id" onChange={idHandler} value={id} />
+      <input id="password" type="password" placeholder="password" onChange={passwordHandler} value={password} />
+    </form>
   );
 }
 
