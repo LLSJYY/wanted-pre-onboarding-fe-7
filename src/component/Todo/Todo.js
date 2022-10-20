@@ -3,17 +3,12 @@ import axios from "axios";
 import TodoInput from "./TodoInput";
 import TodoList from "./TodoList";
 import './Todo.css'
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { init, deleteTodo, modifyTodo } from "../../feature/todoRedux";
 
 const Todo = () => {
-  const todo2 = useSelector((state) => state.todo.list);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+ 
   const [todoStore, setTodoStore] = useState([]);
   const accessToken = localStorage.getItem('wtd_tk');
-  console.log(todo2);
+  
   useEffect(() => {
     if (!accessToken) {
       navigate('/')
@@ -29,7 +24,6 @@ const Todo = () => {
       }
     ).then((res) => {
       setTodoStore(res.data);
-      dispatch(init(res.data))
     }
     )
   }, [])
@@ -69,8 +63,6 @@ const Todo = () => {
     },
     ).then((res) => {
       deleteTodoItem(id);
-      dispatch(deleteTodo(id));
-
     }).catch((res) => {
       console.warn(res);
     })
@@ -92,24 +84,20 @@ const Todo = () => {
     },
     ).then((res) => {
       modifyTodoItem(res.data);
-      dispatch(modifyTodo(res.data));
     }).catch((res) => {
       console.warn(res);
-
     })
   }
-  const modifyTodoItem = (...data) => {
+  const modifyTodoItem = (data) => {
     setTodoStore((prevData) => {
-      [...prevData].forEach(
-        ({ ...item }) => { // ... readonly..?
-          if (item.id === data.id) {
-            item.todo = data.todo;
-          }
-        })
+      prevData.forEach((el)=>{
+        if(el.id===data.id){
+          el.todo = data.todo;
+        }
+      })
       return [...prevData];
-    }
-    )
-  }
+  })
+}
   const onCompletedTodo = (item) => {
     axios.put(`https://pre-onboarding-selection-task.shop/todos/${item.id}`, {
       todo: item.todo,
@@ -127,14 +115,15 @@ const Todo = () => {
     })
   }
 
+  
   const onChangeChecked = (data) => {
-    setTodoStore((prevData) => {
-      [...prevData].forEach(
-        ({ ...item }) => {
-          if (item.id === data.id) {
-            item.isCompleted = data.isCompleted;
-          }
-        })
+    setTodoStore((prevData) =>{
+      prevData.forEach(
+        (item) => {
+        if (item.id === data.id) {
+          item.isCompleted = data.isCompleted;
+        }
+      })
       return [...prevData];
     })
   }

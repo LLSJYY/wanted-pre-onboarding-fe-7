@@ -27,7 +27,6 @@ const TodoList = ({todoStore,onDeleteTodo,onModifyTodo,onCompletedTodo}) => {
   
   const onChangeCompleted = (item) => {
     onCompletedTodo(item);
-    console.log(item.isCompleted);
   }
 
   return (

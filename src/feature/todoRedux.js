@@ -12,15 +12,13 @@ export const todoRedux = createSlice({
     deleteTodo: (state, action) => {
       state.list.filter((todoItem) => todoItem.id === action.payload);
     },
-    modifyTodo: (state, action) => {
+    
+    completedTodo: (state, action) => {
       state.list.forEach((todoItem) => {
         if (todoItem.id === action.payload.id) {
-          todoItem.todo = action.payload.id
+          todoItem.isCompleted = action.payload.isCompleted
         }
       })
-    },
-    completedTodo: (state, action) => {
-      console.Log(state,action.payload)
     },
   }
 })
