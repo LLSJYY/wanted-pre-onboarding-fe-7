@@ -3,12 +3,19 @@ import axios from "axios";
 import TodoInput from "./TodoInput";
 import TodoList from "./TodoList";
 import './Todo.css'
-
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { init, deleteTodo, modifyTodo,completedTodo } from "../../feature/todoRedux";
+import store from '../../feature/todoStore';
+import _ from 'lodash';
 const Todo = () => {
- 
+  const storeRedux = store.getState().todo.list;
+  const  todo2 = useSelector((state)=> state.todo.list);
+  console.log(todo2);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [todoStore, setTodoStore] = useState([]);
   const accessToken = localStorage.getItem('wtd_tk');
-  
   useEffect(() => {
     if (!accessToken) {
       navigate('/')
@@ -24,8 +31,9 @@ const Todo = () => {
       }
     ).then((res) => {
       setTodoStore(res.data);
+      dispatch(init(res.data));
     }
-    )
+ )
   }, [])
 
   const onAddTodo = (data) => {
@@ -63,6 +71,7 @@ const Todo = () => {
     },
     ).then((res) => {
       deleteTodoItem(id);
+
     }).catch((res) => {
       console.warn(res);
     })
@@ -89,13 +98,14 @@ const Todo = () => {
     })
   }
   const modifyTodoItem = (data) => {
-    setTodoStore((prevData) => {
-      prevData.forEach((el)=>{
+    setTodoStore(() => {
+      const newStore = todoStore.map((el)=>({...el}));
+      newStore.forEach((el)=>{
         if(el.id===data.id){
-          el.todo = data.todo;
+          el.todo = data.todo
         }
       })
-      return [...prevData];
+      return newStore;
   })
 }
   const onCompletedTodo = (item) => {
@@ -118,13 +128,14 @@ const Todo = () => {
   
   const onChangeChecked = (data) => {
     setTodoStore((prevData) =>{
-      prevData.forEach(
+      const newState = _.cloneDeep(prevData);
+      newState.forEach(
         (item) => {
         if (item.id === data.id) {
           item.isCompleted = data.isCompleted;
         }
       })
-      return [...prevData];
+      return newState;
     })
   }
   return (
