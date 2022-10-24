@@ -8,11 +8,20 @@ export const todoRedux = createSlice({
   reducers: {
     init: (state, action) => {
       state.list = action.payload;
+    },  
+    addTodo : (state,action) => {
+      state.list.push(action.payload)
     },
     deleteTodo: (state, action) => {
       state.list.filter((todoItem) => todoItem.id === action.payload);
     },
-    
+    modifyTodo: (state,action) => {
+      state.list.forEach((todoItem) => {
+        if (todoItem.id === action.payload.id) {
+          todoItem.todo = action.payload.todo;
+        }
+      })
+    },
     completedTodo: (state, action) => {
       state.list.forEach((todoItem) => {
         if (todoItem.id === action.payload.id) {
@@ -20,13 +29,9 @@ export const todoRedux = createSlice({
         }
       })
     },
-    addTodo : (state,action) => {
-      state.list.push(action.payload)
-    }
-    
   }
 })
 
-export const { init, deleteTodo, modifyTodo,completedTodo } = todoRedux.actions
+export const { init,addTodo, deleteTodo, modifyTodo,completedTodo, } = todoRedux.actions
 
 export default todoRedux.reducer
