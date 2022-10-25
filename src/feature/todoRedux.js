@@ -47,7 +47,7 @@ export const todoRedux = createSlice({
       console.log(JSON.parse(JSON.stringify(state)));      
       state.previous = previous.splice(0,previous.length-1);
       state.list = current || list;
-      state.future = current ? [list,...future] : future;
+      state.future = current ? [...future,list] : future;
       console.log(JSON.parse(JSON.stringify(state)));
     
     },
@@ -56,7 +56,7 @@ export const todoRedux = createSlice({
       const current = future[future.length-1];
       console.log(JSON.parse(JSON.stringify(state)));
 
-      state.previous = [list,...previous];
+      state.previous = [...previous,list];
       state.list = current;
       state.future = future.splice(0,future.length-1);
       console.log(JSON.parse(JSON.stringify(state)));
