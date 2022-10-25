@@ -5,17 +5,23 @@ import TodoList from "./TodoList";
 import './Todo.css'
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { init, addTodo, deleteTodo, modifyTodo, completedTodo } from "../../feature/todoRedux";
+import { init, addTodo, deleteTodo, modifyTodo, completedTodo,undo,redo } from "../../feature/todoRedux";
 import store from '../../feature/todoStore';
+import UndoTodo from '../Todo/UndoTodo';
 import _ from 'lodash';
 const Todo = () => {
   const todo2 = useSelector((state) => state.todo.list);
-  console.log(todo2);
+  const previousTodo = store.getState().todo.previous;
+  const futureTodo = store.getState().todo.future;
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const accessToken = localStorage.getItem('wtd_tk');
- 
+  const isDisableUndo = previousTodo.length < 1; 
+  const isDisableredo = futureTodo.length < 1; 
+
   useEffect(() => {
+    
     if (!accessToken) {
       navigate('/')
     }
@@ -56,8 +62,8 @@ const Todo = () => {
       }
     },
     ).then((res) => {
-      dispatch(deleteTodo(res.id));
-    }).catch((res) => {
+        dispatch(deleteTodo(id))  ;
+   }).catch((res) => {
       console.warn(res);
     })
   };
@@ -97,18 +103,24 @@ const Todo = () => {
     }).catch((res) => {
     })
   }
-
+  const onClickUndo = () => {
+    dispatch(undo());
+  }
+  const onClickRedo = () => {
+    dispatch(redo());
+  }
   return (
     <>
       <div>
         <TodoInput onAddTodo={onAddTodo} />
         <TodoList
-          todoStore={todo2}
+          todoStore={store.getState().todo.list}
           onDeleteTodo={onDeleteTodo}
           onCompletedTodo={onCompletedTodo}
           onModifyTodo={onModifyTodo}
         ></TodoList>
       </div>
+      <UndoTodo onClickUndo={onClickUndo} onClickRedo ={onClickRedo} isDisableUndo={isDisableUndo} isDisableredo={isDisableredo}/>
     </>
   )
 }
