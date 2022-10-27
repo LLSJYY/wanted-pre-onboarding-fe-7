@@ -1,4 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
+const deepCopy = (arr) => arr.map((el)=> ({...el}));
+
 export const todoRedux = createSlice({
   name: 'todo',
   initialState: {
@@ -11,35 +13,28 @@ export const todoRedux = createSlice({
       state.list = action.payload;
     },  
     addTodo : (state,action) => {
-      const newState = state.list.map((el)=>({...el}));
-      state.previous.push(newState);
+      state.previous.push(deepCopy(state.list));
       state.list.push(action.payload)
     },
     deleteTodo: (state, action) => {
-      const newState = state.list.map((el)=>({...el}));
-      state.previous.push(newState);
+      state.previous.push(deepCopy(state.list));
       state.list = state.list.filter((todoItem) => todoItem.id !== action.payload);
     },
     modifyTodo: (state,action) => {
-      const newState = state.list.map((el)=>({...el}));
-
+      state.previous.push(deepCopy(state.list));
       state.list.forEach((todoItem) => {
-        state.previous.push(newState);
         if (todoItem.id === action.payload.id) {
           todoItem.todo = action.payload.todo;
         }
       })
     },
     completedTodo: (state, action) => {
-      const newState = state.list.map((el)=>({...el}));
-      state.previous.push(newState);      
+      state.previous.push(deepCopy(state.list));   
       state.list.forEach((todoItem) => {
         if (todoItem.id === action.payload.id) {
           todoItem.isCompleted = action.payload.isCompleted
         }
       })
-      console.log(JSON.parse(JSON.stringify(state)));
-
     },
     undo: (state,aciton) => {
       const {previous,future,list} = state;
