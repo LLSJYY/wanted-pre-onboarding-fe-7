@@ -1,8 +1,8 @@
 import { useRef } from "react";
 
-const TodoItem = ({item,modifyInputHandler,modfiyBySumbit ,deleteBtnHandler,onChangeCompleted,toggleModify,modifiedTodo,showModfiyInput,newTodo,modifyInputRef}) => {
+const TodoItem = ({item,modifyInputHandler,modfiyBySumbit ,deleteBtnHandler,onChangeCompleted,toggleModify,modifiedTodo,showModfiyInput,newTodo,modifyInputRef,index}) => {
   return (
-    <li className="todoli" data-key={item.todo}>
+    <li data-key={index}>
       {toggleModify === item.id ?
         <>
           <input onChange={modifyInputHandler} value={undefined ||newTodo} ref={modifyInputRef} />

@@ -1,4 +1,8 @@
-const UndoTodo = ({onClickUndo,onClickRedo,isDisableUndo,isDisableredo}) => {
+const UndoTodo = ({onClickUndo,onClickRedo,todoList}) => {
+  const {previous,future} = todoList;
+  const isDisableUndo = previous.length < 1; 
+  const isDisableredo = future.length < 1; 
+
   return (
     <>
       <button onClick={onClickUndo} disabled={isDisableUndo}>undo</button>
