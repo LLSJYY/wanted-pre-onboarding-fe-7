@@ -24,4 +24,6 @@ https://user-images.githubusercontent.com/96014828/196149014-b2bc9d71-05ad-4f6c-
 3.수정모드.     
 4.삭제버튼.   
 
-
+#### 챌린지 이후 리팩토링
+1. Redux 
+2. Recoil 이용 
