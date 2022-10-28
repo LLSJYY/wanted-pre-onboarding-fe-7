@@ -1,11 +1,11 @@
 import axios from "axios";
 import { React, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Main.css"
-import UserId from "./UserId";
-import Button from "./Button";
+import "./ServiceLogin.css"
+import UserId from "../component/Login/UserId";
+import Button from "../component/Login/Button";
 
-const Main = () => {
+const ServiceLogin = () => {
   const navigate = useNavigate();
   const [id, setId] = useState('');
   const [password, setpPassword] = useState(''); // 추후 useRef로 리팩토링 or 두개 합치기.
@@ -124,4 +124,4 @@ const Main = () => {
 
 }
 
-export default Main;
+export default ServiceLogin;
