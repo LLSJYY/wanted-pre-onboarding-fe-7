@@ -3,7 +3,7 @@ import UndoTodo from "./UndoTodo";
 import { init, addTodo, deleteTodo, modifyTodo, completedTodo,undo,redo } from "../../feature/todoRedux";
 import { useDispatch, useSelector } from "react-redux";
 
-const TodoService = () => {
+const TodoRedux = () => {
 
   const todoStore = useSelector((state)=> state.todo);
   const dispatch = useDispatch();
@@ -56,4 +56,4 @@ const TodoService = () => {
   )
 }
 
-export default TodoService;
+export default TodoRedux;

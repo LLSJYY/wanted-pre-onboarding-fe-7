@@ -1,55 +1,12 @@
-import { useRecoilState } from "recoil";
-import Todo from "./Todo";
-import { todoAtom } from "./todoAtom";
+import {RecoilRoot} from 'recoil';
+import TodoRecoil from './TodoRecoil';
 
-const deepCopy = (arr) => arr.map((el) => ({ ...el }));
 
 const TodoRecoilService = () => {
-  const [todoStore, setTodoStore] = useRecoilState(todoAtom);
-
-  const initTodo = (data) => {
-    setTodoStore(data);
-  }
-  const onAddTodo = (data) => {
-    const prevData = deepCopy(todoStore);
-    setTodoStore([...prevData, data]);
-  }
-  const onDeleteTodo = (id) => {
-    setTodoStore(deepCopy(todoStore).filter((el) => el.id !== id))
-  }
-  const onModifyTodo = (data) => {
-    const prevData = deepCopy(todoStore);
-    setTodoStore(() => {
-      prevData.forEach((el) => {
-        if (el.id === data.id) {
-          el.todo = data.todo;
-        }
-      })
-      return prevData;
-    }
-    );
-  }
-  const onCompletedTodo = (data) => {
-    const prevData = deepCopy(todoStore);
-    setTodoStore(() => {
-      prevData.forEach((el) => {
-        if (el.id === data.id) {
-          el.isCompleted = data.isCompleted
-        }
-      })
-      return prevData;
-    }
-    )
-  }
   return (
-    <Todo
-      todoStore={todoStore}
-      initTodo={initTodo}
-      onAddTodo={onAddTodo}
-      onDeleteTodo={onDeleteTodo}
-      onModifyTodo={onModifyTodo}
-      onCompletedTodo={onCompletedTodo}
-    ></Todo>
+    <RecoilRoot>
+      <TodoRecoil/>
+    </RecoilRoot>
   )
 }
 
