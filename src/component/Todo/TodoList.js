@@ -1,17 +1,17 @@
 import { useState, useRef } from "react";
 import TodoItem from "./TodoItem";
 
-const TodoList = ({ todoStore, onDeleteTodo, onModifyTodo, onCompletedTodo }) => {
+const TodoList = ({todoStore, onDeleteTodo, onModifyTodo, onCompletedTodo }) => {
   
   let modifyInputRef = useRef('')
-  const todoStore_ = todoStore.list;
+  const todoStoreRedux = todoStore.list;
+  const todoStore_ = todoStoreRedux || todoStore; //redux,recoil 일때 저장소 이름이 다른데, 어떻게 하면 좋을까요
+
   const [toggleModify, showModfiyInput] = useState(0);
   const [newTodo, modifiedTodo] = useState('');
-
   const modifyInputHandler = (event) => {
     modifyInputRef.current.value = event.target.value;
     modifiedTodo(event.target.value);
-    console.log()
   };
 
   const modfiyBySumbit = (item) => {

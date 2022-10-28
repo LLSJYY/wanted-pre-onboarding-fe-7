@@ -39,23 +39,17 @@ export const todoRedux = createSlice({
     undo: (state,aciton) => {
       const {previous,future,list} = state;
       const current = previous[previous.length-1];
-      console.log(JSON.parse(JSON.stringify(state)));      
       state.previous = previous.splice(0,previous.length-1);
       state.list = current || list;
       state.future = current ? [...future,list] : future;
-      console.log(JSON.parse(JSON.stringify(state)));
     
     },
     redo: (state,aciton) => {
       const {previous,future,list} = state;
       const current = future[future.length-1];
-      console.log(JSON.parse(JSON.stringify(state)));
-
       state.previous = [...previous,list];
       state.list = current;
       state.future = future.splice(0,future.length-1);
-      console.log(JSON.parse(JSON.stringify(state)));
-
     }
   }
 })

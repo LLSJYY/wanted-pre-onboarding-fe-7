@@ -1,19 +1,17 @@
 import { useEffect} from "react";
 import { useNavigate } from "react-router-dom";
-
 import axios from "axios";
 import TodoInput from "./TodoInput";
 import TodoList from "./TodoList";
-import './Todo.css'
+import './Todo.css';
 import _ from 'lodash';
 
 const Todo = ({todoStore,onDeleteTodo,onModifyTodo,onCompletedTodo,initTodo,onAddTodo} ) => {
   const todoStore_ = todoStore;
   const navigate = useNavigate();
+
   const accessToken = localStorage.getItem('wtd_tk');
-
   useEffect(() => {
-
     if (!accessToken) {
       navigate('/')
     }
