@@ -1,5 +1,5 @@
 import { useRecoilState } from "recoil";
-import Todo from "./Todo";
+import Todo from "../../Todo";
 import { todoAtom } from "./todoAtom";
 
 const deepCopy = (arr) => arr.map((el) => ({ ...el }));

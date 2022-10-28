@@ -1,9 +1,9 @@
-import UI from "./UI/UI";
+import ServiceTodo from "./UI/ServiceTodo";
 
 function App() {
   return (
     <div className="App">
-      <UI/>
+      <ServiceTodo/>
     </div>
   );
 }

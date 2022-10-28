@@ -1,4 +1,3 @@
-import { useRef } from "react";
 
 const TodoItem = ({item,modifyInputHandler,modfiyBySumbit ,deleteBtnHandler,onChangeCompleted,toggleModify,modifiedTodo,showModfiyInput,newTodo,modifyInputRef,index}) => {
   return (

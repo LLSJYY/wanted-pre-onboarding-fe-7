@@ -1,6 +1,6 @@
-import Todo from "./Todo"
-import UndoTodo from "./UndoTodo";
-import { init, addTodo, deleteTodo, modifyTodo, completedTodo,undo,redo } from "../../feature/todoRedux";
+import Todo from "../../Todo"
+import UndoTodo from "../../UndoTodo";
+import { init, addTodo, deleteTodo, modifyTodo, completedTodo,undo,redo } from "./todoReduxReducer";
 import { useDispatch, useSelector } from "react-redux";
 
 const TodoRedux = () => {

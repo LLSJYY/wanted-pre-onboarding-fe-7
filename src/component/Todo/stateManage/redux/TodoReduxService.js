@@ -1,6 +1,6 @@
 import TodoRedux from "./TodoRedux";
 import { Provider } from 'react-redux';
-import todoStore from "../../feature/todoStore";
+import todoStore from "./todoStore";
 
 
 const TodoReduxService = () => {

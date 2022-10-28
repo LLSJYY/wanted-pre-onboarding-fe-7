@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 const deepCopy = (arr) => arr.map((el)=> ({...el}));
 
-export const todoRedux = createSlice({
+export const todoReduxReducer = createSlice({
   name: 'todo',
   initialState: {
     previous: [],
@@ -54,6 +54,6 @@ export const todoRedux = createSlice({
   }
 })
 
-export const { init,addTodo, deleteTodo, modifyTodo,completedTodo,undo,redo} = todoRedux.actions
+export const { init,addTodo, deleteTodo, modifyTodo,completedTodo,undo,redo} = todoReduxReducer.actions
 
-export default todoRedux.reducer
+export default todoReduxReducer.reducer
